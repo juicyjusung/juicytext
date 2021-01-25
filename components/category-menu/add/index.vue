@@ -1,5 +1,8 @@
 <template>
-  <h1>Scaffold</h1>
+  <v-expansion-panels v-model="activePanels" multiple accordion tile>
+    {{ search }}
+    <conditional-new-line />
+  </v-expansion-panels>
 </template>
 
 <script lang="ts">
@@ -8,11 +11,14 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator';
 @Component({
   components: {},
 })
-export default class Inspire extends Vue {
+export default class AddCategory extends Vue {
   /*********************************************************************************
    * Prop & Variable & computed
    * ******************************************************************************/
   @Prop({ type: String, default: '' }) value!: string;
+  @Prop({ type: String, default: '' }) search!: string;
+
+  activePanels = [];
   /*********************************************************************************
    * Store
    * ******************************************************************************/
@@ -33,7 +39,6 @@ export default class Inspire extends Vue {
   /*********************************************************************************
    * Life Cycles
    * ******************************************************************************/
-  created() {}
   /*********************************************************************************
    * Methods
    * ******************************************************************************/
