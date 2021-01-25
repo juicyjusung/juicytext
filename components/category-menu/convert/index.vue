@@ -1,5 +1,5 @@
 <template>
-  <h1>Scaffold</h1>
+  <h1>ConvertCategory</h1>
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator';
 @Component({
   components: {},
 })
-export default class Inspire extends Vue {
+export default class ConvertCategory extends Vue {
   /*********************************************************************************
    * Prop & Variable & computed
    * ******************************************************************************/
@@ -33,7 +33,6 @@ export default class Inspire extends Vue {
   /*********************************************************************************
    * Life Cycles
    * ******************************************************************************/
-  created() {}
   /*********************************************************************************
    * Methods
    * ******************************************************************************/

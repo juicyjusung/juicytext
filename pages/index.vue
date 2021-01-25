@@ -1,57 +1,82 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline"> Welcome to the Vuetify + Nuxt.js template </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a href="https://vuetifyjs.com" target="_blank" rel="noopener noreferrer"> documentation </a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" rel="noopener noreferrer" title="chat"> discord </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a href="https://github.com/vuetifyjs/vuetify/issues" target="_blank" rel="noopener noreferrer" title="contribute">
-              issue board </a
-            >.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer"> Nuxt Documentation </a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank" rel="noopener noreferrer"> Nuxt GitHub </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container fluid>
+    <div class="d-flex"></div>
+
+    <v-row class="d-flex" :class="horizontalView ? 'flex-row' : 'flex-column'">
+      <!--input-->
+      <v-col style="transition: all 0.3s ease-out; flex: 1">
+        <text-field
+          :text-pack="textStore.inputTp"
+          style="height: 600px"
+          class="flex-grow-0"
+          @input="val => textStore.setInputText(val)"
+        >
+          <template slot="header">
+            {{ textStore.continuousMode ? 'INPUT/OUTPUT' : 'INPUT' }}
+            <v-spacer />
+            <juicy-switch
+              :value="textStore.continuousMode"
+              label="연속 편집 모드"
+              :dense="false"
+              hint="hi"
+              @input="toggleContinuousMode"
+            />
+            <div class="d-flex mx-2">
+              <v-btn
+                icon
+                :disabled="textStore.continuousMode"
+                @click="() => (horizontalView = !horizontalView)"
+              >
+                <v-icon>{{
+                  horizontalView ? 'mdi-phone-rotate-landscape' : 'mdi-phone-rotate-portrait'
+                }}</v-icon>
+              </v-btn>
+            </div>
+            <v-btn depressed color="primary" class="mx-2" @click="clear">clear</v-btn>
+          </template>
+        </text-field>
+      </v-col>
+
+      <v-col
+        style="transition: all 0.3s ease-out"
+        :style="textStore.continuousMode ? 'flex: 0' : 'flex: 1'"
+        :class="textStore.continuousMode ? 'mx-0 px-0' : ''"
+      >
+        <text-field
+          v-if="!textStore.continuousMode"
+          :text-pack="textStore.outputTp"
+          style="height: 600px"
+          @input="val => textStore.setOutputText(val)"
+        >
+          <template slot="header"> OUTPUT </template>
+        </text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
-<script>
-import Logo from '~/components/Logo.vue';
-import VuetifyLogo from '~/components/VuetifyLogo.vue';
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator';
+import StoreMixin from '~/mixins/store-mixin';
+import { textStore } from '~/utils/store-accessor';
 
-export default {
-  components: {
-    Logo,
-    VuetifyLogo,
+@Component({
+  components: {},
+  mixins: [StoreMixin],
+  async fetch() {
+    // await todoStore.fetchTodos();
   },
-};
+  async asyncData() {},
+})
+export default class Home extends Vue {
+  horizontalView = true;
+  continuousMode = true;
+  clear() {
+    textStore.setInputText('');
+  }
+
+  toggleContinuousMode() {
+    textStore.toggleContinuousMode();
+  }
+}
 </script>
