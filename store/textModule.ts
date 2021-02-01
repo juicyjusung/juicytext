@@ -62,12 +62,20 @@ export default class TextModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  getInputTextArr(options: { removeEmptyLines: boolean }): string[] {
-    if (options && options.removeEmptyLines) {
-      return this.inputTp.text.split('\n').filter(line => !isEmptyLine(line));
-    } else {
-      return this.inputTp.text.split('\n');
+  getInputTextArr(
+    options: { removeEmptyLines?: boolean; trim?: boolean } = {
+      removeEmptyLines: false,
+      trim: false,
     }
+  ): string[] {
+    let textArr = this.inputTp.text.split('\n');
+    if (options.removeEmptyLines) {
+      textArr = textArr.filter(line => !isEmptyLine(line));
+    }
+    if (options.trim) {
+      textArr = textArr.map(line => line.trim());
+    }
+    return textArr;
   }
 
   @Action({ rawError: true })

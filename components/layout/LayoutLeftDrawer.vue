@@ -45,7 +45,13 @@ export default class LayoutLeftDrawer extends Vue {
       label: '제거',
       active: false,
       search: '',
-      children: [],
+      children: [
+        {
+          component: () => import('~/components/category-menu/remove/RemoveDuplicateLines.vue'),
+          label: '',
+          active: false,
+        },
+      ],
     },
     {
       category: 'add',
@@ -72,7 +78,13 @@ export default class LayoutLeftDrawer extends Vue {
       label: '변환',
       active: false,
       search: '',
-      children: [],
+      children: [
+        {
+          component: () => import('~/components/category-menu/convert/ReverseLines.vue'),
+          label: '',
+          active: false,
+        },
+      ],
     },
     {
       category: 'sort',
@@ -80,7 +92,13 @@ export default class LayoutLeftDrawer extends Vue {
       label: '정렬',
       active: false,
       search: '',
-      children: [],
+      children: [
+        {
+          component: () => import('~/components/category-menu/sort/SortLines.vue'),
+          label: '',
+          active: false,
+        },
+      ],
     },
     {
       component: () => import('~/components/category-menu/random/index.vue'),

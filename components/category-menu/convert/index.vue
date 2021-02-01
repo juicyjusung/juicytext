@@ -1,42 +1,17 @@
 <template>
-  <h1>ConvertCategory</h1>
+  <menu-category-panel :category="category" :features="features"></menu-category-panel>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
+import { MenuCategory, MenuFeature } from '~/entity/common/layout';
 
 @Component({
   components: {},
+  mixins: [],
 })
 export default class ConvertCategory extends Vue {
-  /*********************************************************************************
-   * Prop & Variable & computed
-   * ******************************************************************************/
-  @Prop({ type: String, default: '' }) value!: string;
-  /*********************************************************************************
-   * Store
-   * ******************************************************************************/
-  // get email() {
-  //   return this.$accessor.email;
-  // }
-  //
-  // setEmail() {
-  //   this.$accessor.setEmail('testEmail');
-  // }
-  //
-  // setName() {
-  //   this.$accessor.submodule.setName('juicyjusung');
-  // }
-  /*********************************************************************************
-   * Emit
-   * ******************************************************************************/
-  /*********************************************************************************
-   * Life Cycles
-   * ******************************************************************************/
-  /*********************************************************************************
-   * Methods
-   * ******************************************************************************/
+  @Prop(Object) category!: MenuCategory;
+  @Prop(Array) features!: MenuFeature[];
 }
 </script>
-
-<!--<style lang="scss" scoped></style>-->
